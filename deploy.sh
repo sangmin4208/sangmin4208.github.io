@@ -1,4 +1,4 @@
-git checkout gh-page
+git checkout -b gh-page
 yarn run build
 cd dist
 git init 
