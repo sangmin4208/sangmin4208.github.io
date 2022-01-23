@@ -1,27 +1,26 @@
 <template>
-  <div id="nav"><router-link to="/">Home</router-link></div>
-  <router-view />
+  <AppLayout />
 </template>
 
-<style lang="scss">
+<script lang="ts">
+import { defineComponent } from 'vue'
+import AppLayout from '@/layouts/AppLayout.vue'
+export default defineComponent({
+  components: { AppLayout },
+})
+</script>
+
+<style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+  background-color: white;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
 }
 
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>

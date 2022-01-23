@@ -10,10 +10,13 @@
     "deploy": "sh deploy.sh"
   },
   "dependencies": {
+    "@vueuse/core": "^7.5.3",
     "core-js": "^3.6.5",
+    "firebase": "^9.6.3",
+    "mosha-vue-toastify": "^1.0.23",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",
-    "vuex": "^4.0.0-0"
+    "vue3-markdown-it": "^1.0.10"
   },
   "devDependencies": {
     "@types/jest": "^24.0.19",
@@ -24,7 +27,6 @@
     "@vue/cli-plugin-router": "~4.5.0",
     "@vue/cli-plugin-typescript": "~4.5.0",
     "@vue/cli-plugin-unit-jest": "~4.5.0",
-    "@vue/cli-plugin-vuex": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
     "@vue/eslint-config-prettier": "^6.0.0",
