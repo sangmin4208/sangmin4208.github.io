@@ -35,6 +35,7 @@ const handleLogout = async () => {
 nav {
   background: var(--dark-bg-nav-color);
   box-shadow: 0 -2px 10px rgba(0, 0, 0, 1);
+  text-transform: uppercase;
   .wrap {
     display: flex;
     align-items: center;
@@ -63,16 +64,17 @@ nav {
         content: '';
         opacity: 0;
         transition: 0.5s;
-        width: 100%;
+        width: 5px;
         height: 3px;
         border-radius: 3px;
         position: absolute;
+        left: 0;
         bottom: -5px;
-        transform: translateX(-100%);
         background-color: #fff;
       }
       &:hover::after {
         opacity: 1;
+        width: 100%;
         background-color: var(--primary);
       }
     }
