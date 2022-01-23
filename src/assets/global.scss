@@ -1,3 +1,12 @@
-body {
-  font-family: 'Noto Sans KR', sans-serif;
+* {
+  color: inherit;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  --default-font-family: 'Noto Sans KR', sans-serif;
+  --dark-bg-nav-color: #212121;
+  --dark-bg-color: #121212;
+  --dark-font-color: #dadada;
+  --md-container-width: 80%;
 }

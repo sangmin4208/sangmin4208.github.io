@@ -18,10 +18,17 @@ const handleLogout = async () => {
 <template>
   <!-- TODO: Nav 스타일 -->
   <nav>
-    <router-link :to="{ name: 'Home' }">Home</router-link>
-    <router-link :to="{ name: 'PostList' }">Post</router-link>
-    <router-link :to="{ name: 'User' }">User</router-link>
-    <router-link :to="{ name: 'PostCreate' }">Create</router-link>
+    <div class="wrap">
+      <h1>
+        <router-link :to="{ name: 'Home' }">Nacho | Dev</router-link>
+      </h1>
+      <div class="links-container">
+        <router-link :to="{ name: 'Home' }">Home</router-link>
+        <router-link :to="{ name: 'PostList' }">Post</router-link>
+        <router-link :to="{ name: 'User' }">User</router-link>
+        <router-link :to="{ name: 'PostCreate' }">Create</router-link>
+      </div>
+    </div>
   </nav>
   <div v-if="user">
     <button @click="handleLogout">Logout</button>
@@ -32,4 +39,51 @@ const handleLogout = async () => {
   </div>
 </template>
 
-<style></style>
+<style lang="scss">
+nav {
+  background: var(--dark-bg-nav-color);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 1);
+  .wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 40px;
+    width: var(--md-container-width);
+    margin: 0 auto;
+  }
+  .links-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    a {
+      position: relative;
+      margin-right: 20px;
+      opacity: 0.8;
+      transition: 0.5s;
+      &:hover {
+        font-weight: 600;
+        color: #fff;
+        opacity: 1;
+        transform: scale(1.1);
+      }
+      &::after {
+        content: '';
+        opacity: 0;
+        transition: 0.5s;
+        width: 100%;
+        height: 3px;
+        border-radius: 3px;
+        position: absolute;
+        bottom: -5px;
+        transform: translateX(-100%);
+        background-color: #fff;
+      }
+      &:hover::after {
+        opacity: 0.6;
+        background-color: orange;
+      }
+    }
+  }
+}
+</style>
