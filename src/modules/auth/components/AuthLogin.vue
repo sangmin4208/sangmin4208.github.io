@@ -9,11 +9,7 @@ const { toast } = useToast()
 const router = useRouter()
 const handleSignin = async () => {
   const user = await signInWithGitHub()
-  toast(`Hello, ${user.displayName}`, {
-    timeout: 1500,
-    position: 'bottom-center',
-    hideProgressBar: true,
-  })
+  toast(`Hello, ${user.displayName}`)
   router.replace({ name: 'PostList' })
 }
 </script>

@@ -1,18 +1,10 @@
 <script lang="ts" setup>
 import getUser from '@/composables/getUser'
 import useSignOut from '@/composables/useSignOut'
-import useToast from '@/composables/useToast'
-const { user } = getUser()
 const { signOut } = useSignOut()
-const { toast } = useToast()
+const { user } = getUser()
 const handleLogout = async () => {
-  const userName = user.value?.displayName
   await signOut()
-  toast(`Bye, ${userName}`, {
-    timeout: 1500,
-    position: 'bottom-center',
-    hideProgressBar: true,
-  })
 }
 </script>
 <template>
