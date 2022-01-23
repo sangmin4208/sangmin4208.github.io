@@ -80,8 +80,8 @@ nav {
         background-color: #fff;
       }
       &:hover::after {
-        opacity: 0.6;
-        background-color: orange;
+        opacity: 1;
+        background-color: var(--primary);
       }
     }
   }

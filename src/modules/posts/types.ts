@@ -10,3 +10,7 @@ export interface Post {
   createAt?: Date // 작성일자
   updateAt?: Date // 수정일자.
 }
+
+export interface Tag {
+  name: string
+}
