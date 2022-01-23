@@ -9,7 +9,7 @@ const props = defineProps({
   },
 })
 const description = computed(() => {
-  return props.post.body.slice(0, 20).toString() + '...'
+  return props.post.body.slice(0, 50).toString() + '...'
 })
 </script>
 
@@ -23,12 +23,22 @@ const description = computed(() => {
             background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/flex-1.jpg);
           "
         ></div>
-        <article>
-          <h1>{{ props.post.title }}</h1>
-          <p>
+        <article class="content">
+          <h1 class="content-title">{{ props.post.title }}</h1>
+          <p class="content-desc">
             {{ description }}
           </p>
-          <span>{{ props.post.author }}</span>
+          <div class="content-bottom-row">
+            <span class="content-author">{{ props.post.author }}</span>
+            <div v-if="props.post.tags" class="content-tags">
+              <span
+                v-for="tag in props.post.tags"
+                :key="tag"
+                class="content-tag"
+                >{{ tag }}</span
+              >
+            </div>
+          </div>
         </article>
       </div>
     </router-link>
@@ -40,55 +50,69 @@ a {
   text-decoration: none;
 }
 .card {
-  background: white;
+  padding: 20px;
+  background: var(--dark-bg-item-color);
   text-decoration: none;
-  color: #444;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   display: flex;
-  flex-direction: column;
-  min-height: 100%;
-
+  flex-direction: row;
+  border-radius: 7px;
   // sets up hover state
   position: relative;
   top: 0;
   transition: all 0.1s ease-in;
-
+  opacity: 0.8;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+  min-height: 200px;
   &:hover {
-    top: -2px;
-    box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2);
+    transform: scale(1.05);
+    opacity: 1;
   }
 
-  article {
-    padding: 20px;
+  .content {
+    margin-left: 20px;
     flex: 1;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
 
-  h1 {
+  .content-title {
     font-size: 20px;
     margin: 0;
-    color: #333;
   }
 
-  p {
+  .content-desc {
+    opacity: 0.8;
     flex: 1;
     line-height: 1.4;
   }
-
-  span {
+  .content-bottom-row {
+    color: #999;
+    display: flex;
+    justify-content: space-between;
+    margin: 2em 0 0 0;
+    text-transform: uppercase;
+  }
+  .content-author {
     font-size: 12px;
     font-weight: bold;
-    color: #999;
-    text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin: 2em 0 0 0;
+  }
+  .content-tags {
+    opacity: 0.6;
+    color: orange;
+    display: flex;
+    gap: 10px;
+  }
+  .content-tag::before {
+    content: '#';
+    margin: 2px;
   }
 
   .thumb {
-    padding-bottom: 60%;
+    border-radius: inherit;
+    width: 200px;
     background-size: cover;
     background-position: center center;
   }

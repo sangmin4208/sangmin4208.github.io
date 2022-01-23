@@ -15,7 +15,7 @@ export default defineComponent({
   color: var(--dark-font-color);
   font-family: 'Noto Sans KR', sans-serif;
   background: var(--dark-bg-color);
-  height: 100vh;
+  min-height: 100vh;
 }
 .fade-enter-active,
 .fade-leave-active {
