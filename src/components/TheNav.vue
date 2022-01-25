@@ -11,7 +11,7 @@ const handleLogout = async () => {
   <!-- TODO: Nav 스타일 -->
   <nav>
     <div class="wrap">
-      <h1>
+      <h1 class="logo">
         <router-link :to="{ name: 'Home' }">Nacho | Dev</router-link>
       </h1>
       <div class="links-container">
@@ -44,6 +44,13 @@ nav {
     width: var(--md-container-width);
     margin: 0 auto;
   }
+  .logo {
+    transition: transform 0.3s ease;
+    &:hover {
+      transform: scale(1.05);
+      color: white;
+    }
+  }
   .links-container {
     display: flex;
     justify-content: space-between;
@@ -53,7 +60,7 @@ nav {
       position: relative;
       margin-right: 20px;
       opacity: 0.8;
-      transition: 0.5s;
+      transition: width 0.3s ease;
       &:hover {
         font-weight: 600;
         color: #fff;
@@ -64,17 +71,35 @@ nav {
         content: '';
         opacity: 0;
         transition: 0.5s;
-        width: 5px;
+        width: 0px;
         height: 3px;
-        border-radius: 3px;
+        border-radius: 3px 0px 0px 3px;
         position: absolute;
-        left: 0;
+        right: 50%;
+        bottom: -5px;
+        background-color: #fff;
+        translate: rotate(-180deg);
+      }
+      &::before {
+        content: '';
+        opacity: 0;
+        transition: 0.5s;
+        width: 0px;
+        height: 3px;
+        border-radius: 0px 3px 3px 0px;
+        position: absolute;
+        left: 50%;
         bottom: -5px;
         background-color: #fff;
       }
       &:hover::after {
         opacity: 1;
-        width: 100%;
+        width: 50%;
+        background-color: var(--primary);
+      }
+      &:hover::before {
+        opacity: 1;
+        width: 50%;
         background-color: var(--primary);
       }
     }
