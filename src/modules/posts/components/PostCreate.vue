@@ -68,6 +68,7 @@ const handleInputTag = (e: KeyboardEvent) => {
 }
 
 const handleClickTag = (tag: string) => {
+  tag = tag.toLowerCase()
   if (post.tags) {
     const temp = new Set<string>([...post.tags, tag])
     post.tags = Array.from(temp)
