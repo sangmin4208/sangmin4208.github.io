@@ -4,7 +4,7 @@ import usePosts from '../composables/usePosts'
 import { Post } from '../types'
 import Markdown from 'vue3-markdown-it'
 import useToast from '@/composables/useToast'
-import getTags from '../composables/getTags'
+import getTags from '../../../composables/getTags'
 
 const post = reactive<Post>({
   author: 'nacho',

@@ -1,14 +1,13 @@
+import { ref } from 'vue'
 import getCollection from '@/composables/getCollection'
-import { Tag } from '../types'
 
+const tags = ref<string[]>([])
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const getTags = async () => {
-  const { documents: tags } = await getCollection('tags')
-  tags.value = tags.value.map((doc: { id: string }) => {
-    console.log(doc)
+  const { documents } = await getCollection('tags')
+  tags.value = documents.value.map((doc: { id: string }) => {
     return doc.id
   })
-  console.log(tags)
   return { tags }
 }
 
