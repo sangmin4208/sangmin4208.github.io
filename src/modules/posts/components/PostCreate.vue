@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { reactive, ref } from 'vue'
+import { onBeforeUnmount, reactive, ref } from 'vue'
 import usePosts from '../composables/usePosts'
-import { Post } from '../types'
+import { IMAGE_TYPE, Post } from '../types'
 import Markdown from 'vue3-markdown-it'
 import getTags from '../../../composables/getTags'
+import useStorage from '@/composables/useStorage'
 
 const post = reactive<Post>({
   author: 'nacho',
@@ -12,38 +13,105 @@ const post = reactive<Post>({
   series: 'hello',
   type: 'series',
   tags: [],
+  thumnailPath: '',
+  thumnailURL: '',
 })
 const showPreview = ref<boolean>(false)
-
+const thumnailInput = ref<HTMLInputElement | null>(null)
+const { url, filePath, uploadImage, deleteImage } = useStorage()
 const { addDoc } = usePosts()
 const { tags: existTags } = await getTags()
 const handleCreate = async () => {
   await addDoc(post)
+  post.author = 'nacho'
+  post.title = ''
+  post.body = ''
+  post.series = ''
+  post.type = 'article'
+  post.tags = []
+  post.thumnailPath = ''
+  post.thumnailURL = ''
+  if (thumnailInput.value) {
+    thumnailInput.value.value = ''
+  }
 }
 
-const handleInputTag = (event) => {
+onBeforeUnmount(() => {
+  if (post.thumnailPath) {
+    deleteImage(post.thumnailPath)
+  }
+})
+
+const handleInputTag = (e: KeyboardEvent) => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const temp = new Set<string>([...post.tags!, event.target.value])
-  event.target.value = ''
-  post.tags = Array.from(temp)
+  if (!e.target) return
+  const target = e.target as HTMLInputElement
+  if (post.tags) {
+    const temp = new Set<string>([...post.tags, target.value])
+    post.tags = Array.from(temp)
+  } else {
+    post.tags = [target.value]
+  }
+  target.value = ''
 }
 
 const handleClickTag = (tag: string) => {
-  const temp = new Set<string>([...post.tags, tag])
-  post.tags = Array.from(temp)
+  if (post.tags) {
+    const temp = new Set<string>([...post.tags, tag])
+    post.tags = Array.from(temp)
+  } else {
+    post.tags = [tag]
+  }
 }
 const handleDeleteTag = (targetTag: string) => {
-  post.tags = post.tags.filter((tag) => !(tag === targetTag))
+  post.tags = post.tags?.filter((tag) => !(tag === targetTag))
+}
+
+const handleThumNailUpload = async (e: Event) => {
+  if (!e.target) return
+
+  const target = e.target as HTMLInputElement
+  let selected = target.files ? target.files[0] : null
+  if (selected && IMAGE_TYPE.includes(selected?.type)) {
+    if (post.thumnailPath) {
+      await deleteImage(post.thumnailPath)
+      post.thumnailPath = ''
+      post.thumnailURL = ''
+    }
+    await uploadImage(selected)
+    post.thumnailPath = filePath.value
+    post.thumnailURL = url.value
+  } else {
+    if (post.thumnailPath) {
+      await deleteImage(post.thumnailPath)
+      post.thumnailPath = ''
+      post.thumnailURL = ''
+    }
+  }
+  console.log(thumnailInput.value)
 }
 </script>
 <template>
   <button class="btn btn-preview" @click.prevent="showPreview = !showPreview">
     preview
   </button>
+  <div>
+    <img
+      class="thumnail-image"
+      v-if="post.thumnailURL"
+      :src="post.thumnailURL"
+    />
+  </div>
   <div v-if="!showPreview">
     <form @submit.prevent="handleCreate">
       <input class="input-title" type="text" v-model="post.title" />
       <textarea class="input-body" v-model="post.body"></textarea>
+      <input
+        @change.prevent="handleThumNailUpload"
+        type="file"
+        ref="thumnailInput"
+      />
+
       <div class="tag-container exist-tag-container">
         <h1>Existing Tags :</h1>
         <span
@@ -58,6 +126,7 @@ const handleDeleteTag = (targetTag: string) => {
         @keydown.prevent.enter="handleInputTag"
         class="input-tag"
         type="text"
+        placeholder="Input tag"
       />
       <div class="tag-container input-tag-container">
         <h1>Tags :</h1>
@@ -78,6 +147,9 @@ const handleDeleteTag = (targetTag: string) => {
 </template>
 
 <style scoped lang="scss">
+.thumnail-image {
+  width: 150px;
+}
 .preview-container {
   border: 1px solid white;
   margin: auto auto;
@@ -100,6 +172,9 @@ form {
     border: 0;
     outline: 0;
     border-bottom: 1px solid gray;
+  }
+  input::placeholder {
+    font-weight: bold;
   }
   .input-title {
     border-bottom: 1px solid gray;

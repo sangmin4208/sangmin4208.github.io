@@ -33,4 +33,4 @@ const handleUpdate = () => {
   <button @click.prevent="handleDelete">DELETE</button>
   <button @click.prevent="handleUpdate">Update</button>
 </template>
-<style></style>
+<style scoped lang="scss"></style>

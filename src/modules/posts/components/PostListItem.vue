@@ -19,9 +19,7 @@ const description = computed(() => {
       <div class="card">
         <div
           class="thumb"
-          style="
-            background-image: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/210284/flex-1.jpg);
-          "
+          :style="{ backgroundImage: `url(${props.post.thumnailURL})` }"
         ></div>
         <article class="content">
           <h1 class="content-title">{{ props.post.title }}</h1>
