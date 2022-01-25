@@ -1,18 +1,21 @@
-import { ComponentPublicInstance, createApp } from 'vue'
-import App from './App.vue'
+import { createApp, App } from 'vue'
+import AppComponent from './App.vue'
 import router from './router'
 import { auth } from './firebase/config'
-// global styles
 import { onAuthStateChanged } from 'firebase/auth'
+
+// global styles
 import './assets/global.scss'
-import 'highlight.js/styles/monokai.css'
 import 'mosha-vue-toastify/dist/style.css'
 
-let app: ComponentPublicInstance
+// Markdown
 
+let app: App<Element>
 onAuthStateChanged(auth, () => {
   if (app) {
     return
   }
-  app = createApp(App).use(router).mount('#app')
+  app = createApp(AppComponent)
+  app.use(router)
+  app.mount('#app')
 })

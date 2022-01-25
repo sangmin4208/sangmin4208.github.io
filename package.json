@@ -13,6 +13,7 @@
     "@vueuse/core": "^7.5.3",
     "core-js": "^3.6.5",
     "firebase": "^9.6.3",
+    "markdown-it-highlightjs": "^3.6.0",
     "mosha-vue-toastify": "^1.0.23",
     "vue": "^3.0.0",
     "vue-router": "^4.0.0-0",

@@ -2,7 +2,6 @@
 import { onBeforeUnmount, reactive, ref } from 'vue'
 import usePosts from '../composables/usePosts'
 import { IMAGE_TYPE, Post } from '../types'
-import Markdown from 'vue3-markdown-it'
 import getTags from '../../../composables/getTags'
 import useStorage from '@/composables/useStorage'
 
@@ -88,7 +87,6 @@ const handleThumNailUpload = async (e: Event) => {
       post.thumnailURL = ''
     }
   }
-  console.log(thumnailInput.value)
 }
 </script>
 <template>
@@ -141,9 +139,7 @@ const handleThumNailUpload = async (e: Event) => {
       <button class="btn btn-submit">Post 생성</button>
     </form>
   </div>
-  <div v-else class="preview-container">
-    <Markdown :source="post.body" />
-  </div>
+  <div v-else class="preview-container"></div>
 </template>
 
 <style scoped lang="scss">

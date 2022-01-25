@@ -3,7 +3,7 @@ import { defineProps } from 'vue'
 import { useRouter } from 'vue-router'
 import getPost from '../composables/getPost'
 import usePost from '../composables/usePost'
-import Markdown from 'vue3-markdown-it'
+import TheMarkdown from '@/components/TheMarkdown.vue'
 const props = defineProps({
   id: {
     type: String,
@@ -26,11 +26,16 @@ const handleUpdate = () => {
   <!-- TODO: 디테일 페이지 꾸미기 -->
   <h1>{{ props.id }}</h1>
   <h1>Post Details {{ props.id }}</h1>
-  <div v-if="post">
+  <div class="body" v-if="post">
     {{ post }}
-    <Markdown :source="post.body" />
+    <TheMarkdown :source="post.body"></TheMarkdown>
   </div>
-  <button @click.prevent="handleDelete">DELETE</button>
-  <button @click.prevent="handleUpdate">Update</button>
+  <button class="btn" @click.prevent="handleDelete">DELETE</button>
+  <button class="btn" @click.prevent="handleUpdate">Update</button>
 </template>
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.btn {
+  margin-top: 1em;
+  margin-right: 0.8em;
+}
+</style>
