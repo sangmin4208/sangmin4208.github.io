@@ -3,7 +3,6 @@ import { reactive, ref } from 'vue'
 import usePosts from '../composables/usePosts'
 import { Post } from '../types'
 import Markdown from 'vue3-markdown-it'
-import useToast from '@/composables/useToast'
 import getTags from '../../../composables/getTags'
 
 const post = reactive<Post>({
@@ -15,12 +14,11 @@ const post = reactive<Post>({
   tags: [],
 })
 const showPreview = ref<boolean>(false)
-const { toast } = useToast()
+
 const { addDoc } = usePosts()
 const { tags: existTags } = await getTags()
 const handleCreate = async () => {
   await addDoc(post)
-  toast('포스트')
 }
 
 const handleInputTag = (event) => {

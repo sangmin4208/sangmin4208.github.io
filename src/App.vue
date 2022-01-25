@@ -1,5 +1,10 @@
 <template>
-  <AppLayout />
+  <Suspense>
+    <template #default>
+      <AppLayout />
+    </template>
+    <template #fallback> ...loading </template>
+  </Suspense>
 </template>
 
 <script lang="ts">

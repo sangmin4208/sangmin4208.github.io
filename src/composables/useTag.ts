@@ -1,3 +1,4 @@
+import getTags from '@/composables/getTags'
 import { db } from '@/firebase/config'
 import { doc, setDoc } from 'firebase/firestore'
 
@@ -5,6 +6,7 @@ import { doc, setDoc } from 'firebase/firestore'
 const useTag = () => {
   const addTag = async (tag: string) => {
     await setDoc(doc(db, 'tags', tag), {})
+    await getTags()
   }
 
   return { addTag }
