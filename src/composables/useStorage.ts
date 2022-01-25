@@ -7,14 +7,14 @@ import {
 import { storage } from '@/firebase/config'
 import { ref } from 'vue'
 
-const useStorage = () => {
+const useStorage = (path: string) => {
   const error = ref('')
   const url = ref('')
   const filePath = ref('')
 
   const uploadImage = async (file: File) => {
     error.value = ''
-    filePath.value = `thumnail/${Date.now()}}`
+    filePath.value = `${path}/${Date.now()}`
     const storageRef = StorageRef(storage, filePath.value)
     try {
       const res = await uploadBytes(storageRef, file)

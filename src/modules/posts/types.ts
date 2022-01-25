@@ -7,14 +7,18 @@ export interface Post {
   body: string // 내용
   thumnailURL: string
   thumnailPath: string
-  imageURLs?: string[]
-  imagePaths?: string[]
+  files?: UploadFile[]
   tags?: string[] // tags
   images?: string[] // 글 작성시 upload된 이미지들을 저장한다.
   createAt?: Date // 작성일자
   updateAt?: Date // 수정일자.
 }
 
+interface UploadFile {
+  url: string
+  filePath: string
+}
+
 const IMAGE_TYPE = ['image/png', 'image/jpeg']
 
-export { IMAGE_TYPE }
+export { IMAGE_TYPE, UploadFile }

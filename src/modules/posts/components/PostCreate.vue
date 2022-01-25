@@ -1,9 +1,12 @@
 <script lang="ts" setup>
 import { onBeforeUnmount, reactive, ref } from 'vue'
 import usePosts from '../composables/usePosts'
-import { IMAGE_TYPE, Post } from '../types'
+import { IMAGE_TYPE, Post, UploadFile } from '../types'
 import getTags from '../../../composables/getTags'
 import useStorage from '@/composables/useStorage'
+import TheMarkdown from '../../../components/TheMarkdown.vue'
+import TheImageContainer from './TheImageContainer.vue'
+import TheUploadArea from './TheUploadArea.vue'
 
 const post = reactive<Post>({
   author: 'nacho',
@@ -14,14 +17,9 @@ const post = reactive<Post>({
   tags: [],
   thumnailPath: '',
   thumnailURL: '',
+  files: [],
 })
-const showPreview = ref<boolean>(false)
-const thumnailInput = ref<HTMLInputElement | null>(null)
-const { url, filePath, uploadImage, deleteImage } = useStorage()
-const { addDoc } = usePosts()
-const { tags: existTags } = await getTags()
-const handleCreate = async () => {
-  await addDoc(post)
+const initPost = () => {
   post.author = 'nacho'
   post.title = ''
   post.body = ''
@@ -30,6 +28,16 @@ const handleCreate = async () => {
   post.tags = []
   post.thumnailPath = ''
   post.thumnailURL = ''
+  post.files = []
+}
+const showPreview = ref<boolean>(false)
+const thumnailInput = ref<HTMLInputElement | null>(null)
+const { url, filePath, uploadImage, deleteImage } = useStorage('thumnail')
+const { addDoc } = usePosts()
+const { tags: existTags } = await getTags()
+const handleCreate = async () => {
+  await addDoc(post)
+  initPost()
   if (thumnailInput.value) {
     thumnailInput.value.value = ''
   }
@@ -38,6 +46,11 @@ const handleCreate = async () => {
 onBeforeUnmount(() => {
   if (post.thumnailPath) {
     deleteImage(post.thumnailPath)
+  }
+  if (post.files) {
+    post.files.forEach((file) => {
+      deleteImage(file.filePath)
+    })
   }
 })
 
@@ -88,6 +101,18 @@ const handleThumNailUpload = async (e: Event) => {
     }
   }
 }
+const handleImageUpload = (file: UploadFile) => {
+  post.files?.push(file)
+  post.body += `\n ![content-image](${file.url})`
+}
+const handleImageDelete = async (targetFile: UploadFile) => {
+  if (!post.files) return
+  await deleteImage(targetFile.filePath)
+  post.body = post.body.replaceAll(`![content-image](${targetFile.url})`, '')
+  post.files = post.files.filter(
+    (file) => !(file.filePath === targetFile.filePath)
+  )
+}
 </script>
 <template>
   <button class="btn btn-preview" @click.prevent="showPreview = !showPreview">
@@ -136,10 +161,17 @@ const handleThumNailUpload = async (e: Event) => {
           >{{ tag }}</span
         >
       </div>
+      <TheImageContainer
+        @delete="handleImageDelete"
+        :images="post.files!"
+      ></TheImageContainer>
+      <TheUploadArea @upload="handleImageUpload" />
       <button class="btn btn-submit">Post 생성</button>
     </form>
   </div>
-  <div v-else class="preview-container"></div>
+  <div v-else class="preview-container">
+    <TheMarkdown :source="post.body"></TheMarkdown>
+  </div>
 </template>
 
 <style scoped lang="scss">
