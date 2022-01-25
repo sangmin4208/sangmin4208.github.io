@@ -8,9 +8,6 @@ const props = defineProps({
     required: true,
   },
 })
-const description = computed(() => {
-  return props.post.body.slice(0, 50).toString() + '...'
-})
 </script>
 
 <template>
@@ -24,7 +21,7 @@ const description = computed(() => {
         <article class="content">
           <h1 class="content-title">{{ props.post.title }}</h1>
           <p class="content-desc">
-            {{ description }}
+            {{ post.desc }}
           </p>
           <div class="content-bottom-row">
             <span class="content-author">{{ props.post.author }}</span>

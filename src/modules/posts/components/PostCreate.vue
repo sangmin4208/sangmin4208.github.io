@@ -9,11 +9,12 @@ import TheImageContainer from './TheImageContainer.vue'
 import TheUploadArea from './TheUploadArea.vue'
 
 const post = reactive<Post>({
-  author: 'nacho',
-  title: 'Awesome CSS',
-  body: '# test body',
-  series: 'hello',
-  type: 'series',
+  author: '',
+  title: '',
+  desc: '',
+  body: '',
+  series: '',
+  type: 'article',
   tags: [],
   thumnailPath: '',
   thumnailURL: '',
@@ -23,6 +24,7 @@ const initPost = () => {
   post.author = 'nacho'
   post.title = ''
   post.body = ''
+  post.desc = ''
   post.series = ''
   post.type = 'article'
   post.tags = []
@@ -128,8 +130,18 @@ const handleImageDelete = async (targetFile: UploadFile) => {
   </div>
   <div v-if="!showPreview">
     <form @submit.prevent="handleCreate">
-      <input class="input-title" type="text" v-model="post.title" />
-      <textarea class="input-body" v-model="post.body"></textarea>
+      <input
+        class="input-title"
+        type="text"
+        v-model="post.title"
+        placeholder="Title..."
+      />
+      <textarea v-model="post.desc" placeholder="Description..."></textarea>
+      <textarea
+        class="input-body"
+        v-model="post.body"
+        placeholder="Body..."
+      ></textarea>
       <input
         @change.prevent="handleThumNailUpload"
         type="file"
