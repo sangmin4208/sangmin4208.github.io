@@ -6,8 +6,10 @@ import {
 } from 'firebase/storage'
 import { storage } from '@/firebase/config'
 import { ref } from 'vue'
+import { STORAGE_PATH } from '@/types/storage'
 
-const useStorage = (path: string) => {
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+const useStorage = (path: STORAGE_PATH) => {
   const error = ref('')
   const url = ref('')
   const filePath = ref('')
