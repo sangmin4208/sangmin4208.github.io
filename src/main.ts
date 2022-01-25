@@ -8,7 +8,8 @@ import { onAuthStateChanged } from 'firebase/auth'
 import './assets/global.scss'
 import 'mosha-vue-toastify/dist/style.css'
 
-// Markdown
+// Material icon
+import 'material-icons/iconfont/material-icons.css'
 
 let app: App<Element>
 onAuthStateChanged(auth, () => {
