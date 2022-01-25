@@ -8,7 +8,6 @@ const getCollection = async (path: string, ...options: QueryConstraint[]) => {
   const q = query(collection(db, path), ...options)
   const querySnapShot = await getDocs(q)
   querySnapShot.forEach((doc) => {
-    console.log(doc)
     if (doc.exists()) {
       documents.value.push({ ...doc.data(), id: doc.id })
     }
