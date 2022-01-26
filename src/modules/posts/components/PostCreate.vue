@@ -232,19 +232,7 @@ form {
   .input-body {
     height: 30vh;
   }
-  .tag {
-    text-transform: uppercase;
-    padding: 2px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: 0.5s;
-    background-color: var(--primary);
-  }
 
-  .tag:hover {
-    transform: scale(1.1);
-  }
   .tag-container {
     align-items: center;
     display: flex;

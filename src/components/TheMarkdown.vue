@@ -9,7 +9,6 @@ const props = defineProps({
     reuired: true,
   },
 })
-
 const parsingMark = computed(() => {
   if (!props.source) return
   const regex = /`(?=[^`{2}])([a-zA-Z\\[\].,\s]+)`(?=[^`{2}])/gim
@@ -24,8 +23,8 @@ const parsingMark = computed(() => {
     :source="parsingMark"
     :html="true"
     :breaks="true"
-    :tasklists="{ label: true, labelAfter: true }"
     :typographer="true"
+    :highlight="{ inline: true }"
   />
 </template>
 

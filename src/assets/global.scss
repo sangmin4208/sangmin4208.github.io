@@ -13,6 +13,7 @@
   --md-container-width: 80%;
   --primary: #985eff;
   --secondary: #09c372;
+  --warning: #8f3b3c;
 }
 
 .btn {
@@ -26,6 +27,32 @@
   text-transform: uppercase;
 }
 
+.btn-secondary {
+  background-color: var(--secondary);
+}
+.btn-warn {
+  background-color: var(--warning);
+}
+.hover {
+  transition: transform 0.1s ease;
+  &:hover {
+    transform: scale(1.03);
+  }
+}
 .mt-1 {
   margin-top: 0.5rem;
+}
+
+.tag {
+  text-transform: uppercase;
+  padding: 2px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.5s;
+  background-color: var(--primary);
+}
+
+.tag:hover {
+  transform: scale(1.1);
 }
