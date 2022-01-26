@@ -12,23 +12,19 @@ const handleLogout = async () => {
   <nav>
     <div class="wrap">
       <h1 class="logo">
-        <router-link :to="{ name: 'Home' }">Nacho | Dev</router-link>
+        <router-link :to="{ name: 'PostList' }">Nacho | Dev</router-link>
       </h1>
       <div class="links-container">
-        <router-link :to="{ name: 'Home' }">Home</router-link>
+        <!-- <router-link :to="{ name: 'About' }">About Me</router-link> -->
         <router-link :to="{ name: 'PostList' }">Post</router-link>
-        <router-link :to="{ name: 'User' }">User</router-link>
-        <router-link :to="{ name: 'PostCreate' }">Create</router-link>
+        <div class="login-container" v-if="user">
+          <router-link :to="{ name: 'PostCreate' }">Create</router-link>
+          <p>Hello, {{ user.displayName }}</p>
+          <button class="btn" @click="handleLogout">Logout</button>
+        </div>
       </div>
     </div>
   </nav>
-  <div v-if="user">
-    <button @click="handleLogout">Logout</button>
-    <p>Hello, {{ user.displayName }}</p>
-  </div>
-  <div v-else>
-    <router-link :to="{ name: 'AuthLogin' }">Login</router-link>
-  </div>
 </template>
 
 <style lang="scss">
@@ -50,6 +46,12 @@ nav {
       transform: scale(1.05);
       color: white;
     }
+  }
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
   }
   .links-container {
     display: flex;

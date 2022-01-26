@@ -2,6 +2,7 @@
 import { defineProps } from 'vue'
 import { useRouter } from 'vue-router'
 import getPost from '../composables/getPost'
+import getUser from '@/composables/getUser'
 import usePost from '../composables/usePost'
 import TheMarkdown from '@/components/TheMarkdown.vue'
 const props = defineProps({
@@ -11,6 +12,7 @@ const props = defineProps({
   },
 })
 const router = useRouter()
+const { ownership } = getUser()
 const { post } = await getPost(props.id)
 const { deleteDoc } = await usePost(props.id)
 const handleDelete = async () => {
@@ -30,13 +32,14 @@ const handleUpdate = () => {
     <div class="body" v-if="post">
       <TheMarkdown :source="post.body"></TheMarkdown>
     </div>
-
-    <button class="btn btn-warn hover" @click.prevent="handleDelete">
-      DELETE
-    </button>
-    <button class="btn btn-secondary hover" @click.prevent="handleUpdate">
-      Update
-    </button>
+    <div v-if="ownership">
+      <button class="btn btn-warn hover" @click.prevent="handleDelete">
+        DELETE
+      </button>
+      <button class="btn btn-secondary hover" @click.prevent="handleUpdate">
+        Update
+      </button>
+    </div>
   </div>
 </template>
 <style scoped lang="scss">

@@ -1,3 +1,4 @@
+import getUser from '@/composables/getUser'
 import {
   getDownloadURL,
   ref as StorageRef,
@@ -7,7 +8,7 @@ import {
 import { storage } from '@/firebase/config'
 import { ref } from 'vue'
 import { STORAGE_PATH } from '@/types/storage'
-
+const { user } = getUser()
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 const useStorage = (path: STORAGE_PATH) => {
   const error = ref('')
@@ -15,8 +16,9 @@ const useStorage = (path: STORAGE_PATH) => {
   const filePath = ref('')
 
   const uploadImage = async (file: File) => {
+    if (!user.value) return
     error.value = ''
-    filePath.value = `${path}/${Date.now()}`
+    filePath.value = `${user.value.uid}/${path}/${Date.now()}`
     const storageRef = StorageRef(storage, filePath.value)
     try {
       const res = await uploadBytes(storageRef, file)

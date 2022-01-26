@@ -1,30 +1,26 @@
-import PostList from '@/modules/posts/components/PostList.vue'
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
-import Home from '@/views/Home.vue'
+// import About from '@/views/About.vue'
 import Post from '@/views/Post.vue'
 import Auth from '@/views/Auth.vue'
 
 import PostRoute from './post'
 import AuthRoute from './auth'
-import User from '@/views/User.vue'
-import UserDetails from '@/modules/user/components/UserDetails.vue'
 
 const routes: Array<RouteRecordRaw> = [
+  // {
+  //   path: '/',
+  //   name: 'About',
+  //   component: About,
+  // },
   {
     path: '/',
-    name: 'Home',
-    component: Home,
+    redirect: { name: 'PostList' },
   },
   {
     path: '/posts',
     name: 'Post',
     component: Post,
     children: PostRoute,
-  },
-  {
-    path: '/test',
-    name: 'Test',
-    component: PostList,
   },
 
   {
@@ -33,17 +29,6 @@ const routes: Array<RouteRecordRaw> = [
     component: Auth,
     redirect: { name: 'AuthLogin' },
     children: AuthRoute,
-  },
-  {
-    path: '/user',
-    name: 'User',
-    component: User,
-    children: [
-      {
-        path: '/',
-        component: UserDetails,
-      },
-    ],
   },
 ]
 

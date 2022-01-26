@@ -189,8 +189,11 @@ const handleImageDelete = async (targetFile: UploadFile) => {
       <button class="btn btn-submit">Post 생성</button>
     </form>
   </div>
-  <div v-else class="preview-container">
-    <TheMarkdown :source="post.body"></TheMarkdown>
+  <div v-else class="mt-1">
+    <PostListItem :post="post"></PostListItem>
+    <div class="preview-conatiner">
+      <TheMarkdown :source="post.body"></TheMarkdown>
+    </div>
   </div>
 </template>
 

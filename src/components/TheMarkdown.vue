@@ -38,6 +38,7 @@ const parsingMark = computed(() => {
   code {
     padding: 1.3em;
     border-radius: 0.2rem;
+    margin: 0 5ch;
   }
   mark {
     background-color: RGBA(60, 64, 65, 0.5);
@@ -50,6 +51,23 @@ const parsingMark = computed(() => {
     align-items: center;
     vertical-align: 1px;
     margin-right: -0.3ch;
+  }
+  a {
+    position: relative;
+    color: #7f8284;
+    &:hover {
+      color: lighten($color: #7f8284, $amount: 10);
+      transform: scale(1.01);
+    }
+    &:hover::after {
+      content: '';
+      position: absolute;
+      bottom: -0.2em;
+      height: 0.11em;
+      width: 90%;
+      left: 5%;
+      background-color: lighten($color: #7f8284, $amount: 10);
+    }
   }
 }
 </style>
