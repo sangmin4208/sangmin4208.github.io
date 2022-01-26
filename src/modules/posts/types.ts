@@ -21,6 +21,6 @@ interface UploadFile {
   filePath: string
 }
 
-const IMAGE_TYPE = ['image/png', 'image/jpeg']
+const IMAGE_TYPE = ['image/png', 'image/jpeg', 'image/gif']
 
 export { IMAGE_TYPE, UploadFile }

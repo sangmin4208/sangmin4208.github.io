@@ -106,12 +106,19 @@ const handleThumNailUpload = async (e: Event) => {
 }
 const handleImageUpload = (file: UploadFile) => {
   post.files?.push(file)
-  post.body += `\n ![content-image](${file.url})`
+  post.body += `\n <div style="display:flex; justify-content: center">
+<img src="${file.url}" alt="content-image" style="width:500px;"/>
+</div>`
 }
 const handleImageDelete = async (targetFile: UploadFile) => {
   if (!post.files) return
   await deleteImage(targetFile.filePath)
-  post.body = post.body.replaceAll(`![content-image](${targetFile.url})`, '')
+  post.body = post.body.replaceAll(
+    `<div style="display:flex; justify-content: center">
+<img src="${targetFile.url}" alt="content-image" style="width:500px;"/>
+</div>`,
+    ''
+  )
   post.files = post.files.filter(
     (file) => !(file.filePath === targetFile.filePath)
   )
